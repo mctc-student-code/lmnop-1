@@ -3,6 +3,7 @@ from django.db import models
 from django.db import models
 from django.contrib.auth.models import User
 import datetime
+from django.core.files.storage import default_storage
 
 # Every model gets a primary key field by default.
 
@@ -41,6 +42,7 @@ class Show(models.Model):
     show_date = models.DateTimeField(blank=False)
     artist = models.ForeignKey(Artist, on_delete=models.CASCADE)
     venue = models.ForeignKey(Venue, on_delete=models.CASCADE)
+    
 
     def __str__(self):
         return f'Artist: {self.artist} At: {self.venue} On: {self.show_date}'
@@ -53,7 +55,26 @@ class Note(models.Model):
     title = models.CharField(max_length=200, blank=False)
     text = models.TextField(max_length=1000, blank=False)
     posted_date = models.DateTimeField(auto_now_add=True, blank=False)
+    photo = models.ImageField(upload_to='user_images/', blank=True, null=True)
 
-    def __str__(self):
-        return f'User: {self.user} Show: {self.show} Note title: {self.title} Text: {self.text} Posted on: {self.posted_date}'
+    
+
+    def save(self, *args, **kwargs):
+        old_note = Note.objects.filter(pk=self.pk).first()
+        if old_note and old_note.photo:
+            if old_note.photo != self.photo:
+                self.delete_photo(old_note.photo)
+
+        super().save(*args, **kwargs)
+
+    #if a whole note is deleted, this is used so the photo associated with the note is not taking up space in our file system
+
+
+
+
+def __str__(self):
+        photo_str = self.photo.url if self.photo else 'no photo'
+        return f'Note for user {self.user} for show ID {self.show} with title {self.title} text {self.text} posted on {self.posted_date}\nPhoto {photo_str}'
+
+
 

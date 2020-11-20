@@ -16,7 +16,7 @@ def new_note(request, show_pk):
     show = get_object_or_404(Show, pk=show_pk)
 
     if request.method == 'POST' :
-        form = NewNoteForm(request.POST)
+        form = NewNoteForm(request.POST, request.FILES, instance=show)
         if form.is_valid():
             note = form.save(commit=False)
             note.user = request.user
@@ -45,6 +45,26 @@ def notes_for_show(request, show_pk):
 def note_detail(request, note_pk):
     note = get_object_or_404(Note, pk=note_pk)
     return render(request, 'lmn/notes/note_detail.html' , { 'note': note })
+    #if note.user != request.user:
+        #return HttpResponseForbidden()
+
+        
+    #if request.method == "POST":
+        #form = NewNoteForm(request.POST, request.FILES, instance=note)
+        #if form.is_valid():
+            ##form.save()
+            #messages.info(request, 'Photo and Note updated!')
+
+        #else:
+            #messages.error(request, form.errors)
+
+        #return redirect('new_note', note_pk=note_pk )
+    #else:
+        #if note.show:
+           # review_form = NewNoteForm(instance=note)
+            #return render(request, 'lmn/new_note.html', {'note': note, "review_from":review_form })
+            #return render(request, 'lmn/notes/new_note.html', {'note': note,  'review_form': review_form}) 
+    #return render(request, 'lmn/notes/new_note.html', {'note': note}) 
 
 @login_required #can only delete own notes
 def delete_note(request, note_pk):
