@@ -10,6 +10,7 @@
 
   env_variables:
     EVENT_PW: Strangerdanger
+    TICKETMASTER_KEY: YKVl3ivkvXGB6wB0m418jXOrKGazQwFS
 
   beta_settings:
     cloud_sql_instances: lmnop-project5:us-central1:event-db
