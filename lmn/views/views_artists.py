@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 
 from ..models import Venue, Artist, Note, Show
 from ..forms import VenueSearchForm, NewNoteForm, ArtistSearchForm, UserRegistrationForm
+from lmnop_project import helpers
 
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
@@ -27,7 +28,7 @@ def artist_list(request):
         artists = Artist.objects.filter(name__icontains=search_name).order_by('name')
     else:
         artists = Artist.objects.all().order_by('name')
-
+    artists = helpers.pg_records(request, artists, 2)
     return render(request, 'lmn/artists/artist_list.html', { 'artists': artists, 'form': form, 'search_term': search_name })
 
 

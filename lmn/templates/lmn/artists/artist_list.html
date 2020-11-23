@@ -37,4 +37,20 @@
 
 {% endfor %}
 
+<div class="pagination">
+    <div class="section-inner clearfix">
+        <p>
+            {% if artists.has_previous %}
+                <a href="?page={{ artists.previous_page_number }}">&lt; Prev</a> |
+            {% endif %}
+
+            {% if artists.has_next %}
+                <a href="?page={{ artists.next_page_number }}">Next &gt;</a>
+            {% endif %}
+
+            <span>Page {{ artists.number }} of {{ artists.paginator.num_pages }}</span>
+        </p>
+    </div>
+</div>
+
 {% endblock %}
