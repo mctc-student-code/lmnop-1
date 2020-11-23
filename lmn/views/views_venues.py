@@ -19,7 +19,7 @@ def venue_list(request):
     else :
         venues = Venue.objects.all().order_by('name')   # Todo paginate
 
-    venues = helpers.pg_records(request, venues, 2)
+    venues = helpers.pg_records(request, venues, 5)
     return render(request, 'lmn/venues/venue_list.html', { 'venues': venues, 'form': form, 'search_term': search_name })
 
 
