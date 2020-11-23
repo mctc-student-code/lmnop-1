@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from lmnop_project import helpers
 
 from ..models import Venue, Artist, Note, Show
 from ..forms import VenueSearchForm, NewNoteForm, ArtistSearchForm, UserRegistrationForm
@@ -18,6 +19,7 @@ def venue_list(request):
     else :
         venues = Venue.objects.all().order_by('name')   # Todo paginate
 
+    venues = helpers.pg_records(request, venues, 2)
     return render(request, 'lmn/venues/venue_list.html', { 'venues': venues, 'form': form, 'search_term': search_name })
 
 
