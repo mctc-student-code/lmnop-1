@@ -1,14 +1,9 @@
 from django.shortcuts import render, redirect, get_object_or_404
-
-from ..models import Venue, Artist, Note, Show
-from ..forms import VenueSearchForm, NewNoteForm, ArtistSearchForm, UserRegistrationForm
-
+from ..models import Note, Show
+from ..forms import NewNoteForm
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import User
-from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseForbidden
-
-
+from lmnop_project import helpers
 
 @login_required
 def new_note(request, show_pk):
@@ -32,6 +27,8 @@ def new_note(request, show_pk):
 
 def latest_notes(request):
     notes = Note.objects.all().order_by('-posted_date')
+    # Calls helper function to paginate records. (request, list of objects, how many entries per page)
+    notes = helpers.pg_records(request, notes, 2)
     return render(request, 'lmn/notes/note_list.html', { 'notes': notes })
 
 
