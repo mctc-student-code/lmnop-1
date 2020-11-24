@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseForbidden
 from lmnop_project import helpers
 
+
 @login_required
 def new_note(request, show_pk):
 
@@ -17,6 +18,7 @@ def new_note(request, show_pk):
             note.user = request.user
             note.show = show
             note.save()
+
             return redirect('note_detail', note_pk=note.pk)
 
     else :
@@ -32,16 +34,38 @@ def latest_notes(request):
     return render(request, 'lmn/notes/note_list.html', { 'notes': notes })
 
 
-def notes_for_show(request, show_pk): 
+def notes_for_show(request, show_pk):
     # Notes for show, most recent first
     notes = Note.objects.filter(show=show_pk).order_by('-posted_date')
-    show = Show.objects.get(pk=show_pk)  
+    show = Show.objects.get(pk=show_pk)
     return render(request, 'lmn/notes/note_list.html', { 'show': show, 'notes': notes })
 
 
 def note_detail(request, note_pk):
     note = get_object_or_404(Note, pk=note_pk)
-    return render(request, 'lmn/notes/note_detail.html' , { 'note': note })
+    form = NewNoteForm(instance=note)  # Pre-populate with data from this NOte instance
+    return render(request, 'lmn/notes/note_detail.html', {'note': note, 'form': form} )
+
+
+@login_required
+def edit_note(request, note_pk):
+    note = get_object_or_404(Note, pk=note_pk)
+    #need to get the show Id as saving the note requires that
+    show = get_object_or_404(Show, pk= note.show_id)
+    if note.user != request.user:
+        return HttpResponseForbidden()
+
+    if request.method == 'POST' :
+        form = NewNoteForm(request.POST, request.FILES, instance=note)
+
+        if form.is_valid():
+            note = form.save(commit=False)
+            note.user = request.user
+            note.show = show
+            note.save()
+
+            return redirect('note_detail', note_pk=note.pk)
+
 
 @login_required #can only delete own notes
 def delete_note(request, note_pk):
