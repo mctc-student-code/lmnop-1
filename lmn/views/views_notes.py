@@ -22,7 +22,7 @@ def new_note(request, show_pk):
             note.show = show
             note.save()
             
-            return redirect('user_profile')
+            return redirect('my_user_profile')
     else :
         form = NewNoteForm()
 
@@ -47,8 +47,7 @@ def note_detail(request, note_pk):
     if request.user == note.user:
         form = NewNoteForm(instance=note)  # Pre-populate with data from this NOte instance
         return render(request, 'lmn/notes/note_detail.html', {'note': note, 'form': form} )
-    #is there an else?
-    #don't even show the form if it's not the correct user
+    
     return render(request, 'lmn/notes/note_detail.html', {'note': note} )
     
 @login_required
@@ -68,7 +67,6 @@ def edit_note(request, note_pk):
             note.show = show
             note.save()
            
-            #return redirect('note_detail', note_pk=note.pk)
             return redirect('my_user_profile')
     
 @login_required #can only delete own notes

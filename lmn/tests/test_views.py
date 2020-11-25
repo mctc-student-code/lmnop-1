@@ -379,7 +379,8 @@ class TestAddNotesWhenUserLoggedIn(TestCase):
         response = self.client.post(new_note_url, {'text':'ok', 'title':'blah blah' }, follow=True)
         new_note = Note.objects.filter(text='ok', title='blah blah').first()
 
-        self.assertRedirects(response, reverse('my_user_profile'))
+        self.assertRedirects(response, reverse('user_profile' , kwargs = {'user_pk': 1}))
+        
 
 class TestDeleteNote(TestCase):
     #populate test db with info 
