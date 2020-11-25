@@ -22,8 +22,7 @@ def new_note(request, show_pk):
             note.show = show
             note.save()
             
-            return redirect('note_detail', note_pk=note.pk)
-
+            return redirect('user_profile')
     else :
         form = NewNoteForm()
 
@@ -39,7 +38,7 @@ def notes_for_show(request, show_pk):
     # Notes for show, most recent first
     notes = Note.objects.filter(show=show_pk).order_by('-posted_date')
     show = Show.objects.get(pk=show_pk)  
-    return render(request, 'lmn/notes/note_list.html', { 'show': show, 'notes': notes })
+    return render(request, 'lmn/notes/notes_for_show.html', { 'show': show, 'notes': notes })
 
 
 def note_detail(request, note_pk):
@@ -69,8 +68,8 @@ def edit_note(request, note_pk):
             note.show = show
             note.save()
            
-            return redirect('note_detail', note_pk=note.pk)
-
+            #return redirect('note_detail', note_pk=note.pk)
+            return redirect('my_user_profile')
     
 @login_required #can only delete own notes
 def delete_note(request, note_pk):
