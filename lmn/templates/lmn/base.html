@@ -1,15 +1,21 @@
 {% load static %}
 <html>
 <head>
-  <title>LMNOP</title>
   
+  <title>LMNOP</title>
+  <!--
+  <link rel="stylesheet" href="https://unpkg.com/sakura.css/css/sakura.css" type="text/css">
+-->
+
+<!--<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/kognise/water.css@latest/dist/light.min.css">
+-->   
   <link rel="stylesheet" href="{% static 'css/base_style.css' %}" type="text/css"></link>
 </head>
 
 <body>
 
 <h1>LMN</h1>
-
+<div class="navigation">
 <a href="{% url 'venue_list' %}">Venues</a>
 <a href="{% url 'artist_list' %}">Artists</a>
 <a href="{% url 'latest_notes' %}">Notes</a>
@@ -22,7 +28,7 @@
   <span id='login-or-sign-up'><a href="{% url 'login' %}?next={{ request.path }}">Login or sign up</a></span>
 
 {% endif %}
-
+</div>
 <hr>
 
 {% block content %}

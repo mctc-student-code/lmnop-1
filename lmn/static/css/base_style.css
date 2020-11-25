@@ -1,17 +1,41 @@
+
+/* original
 body {
   font-family: monospace;
   background: #444d4d;
   color: antiquewhite;
-}
+  
+}*/
 
+body {
+  font-family: Arial, Helvetica, sans-serif;
+
+  background: /*from https://projects.verou.me/css3patterns/#carbon*/
+linear-gradient(27deg, #151515 5px, transparent 5px) 0 5px,
+linear-gradient(207deg, #151515 5px, transparent 5px) 10px 0px,
+linear-gradient(27deg, #222 5px, transparent 5px) 0px 10px,
+linear-gradient(207deg, #222 5px, transparent 5px) 10px 5px,
+linear-gradient(90deg, #1b1b1b 10px, transparent 10px),
+linear-gradient(#1d1d1d 25%, #1a1a1a 25%, #1a1a1a 50%, transparent 50%, transparent 75%, #242424 75%, #242424);
+background-color: #131313;
+background-size: 20px 20px;
+
+  color: antiquewhite;
+  padding: 8px;
+}
 a {
-  color: rgb(70, 193, 197);
+  /*color: rgb(70, 193, 197); original*/
+  color: rgb(136, 3, 252);
 }
 
 #welcome-user-msg, #login-or-sign-up {
   position: absolute;
   right: 0px;
   padding-right: 10px;
+}
+
+.navigation > a {
+  padding-right: 30px;
 }
 
 .error {
@@ -22,3 +46,11 @@ a {
   /* font-weight: bold; */
 }
 
+.submit {
+  color: rgb(157, 3, 252) /* color of text on button */
+}
+
+.submit:hover {
+  color: rgb(252,3,223);
+
+}
