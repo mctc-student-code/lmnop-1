@@ -60,21 +60,25 @@ class Note(models.Model):
     
 
     def save(self, *args, **kwargs):
+        #get reference to previous versionof this note
         old_note = Note.objects.filter(pk=self.pk).first()
-        if old_note and old_note.photo:
-            if old_note.photo != self.photo:
-                self.delete_photo(old_note.photo)
+        if old_note and old_note.photo: #check if an old note exists and has a photo
+            if old_note.photo != self.photo: # check if the photo has been changed
+                self.delete_photo(old_note.photo) #delete the old photo
+        super().save(*args, **kwargs) 
 
-        super().save(*args, **kwargs)
+    def delete_photo(self, photo):
+        if default_storage.exists(photo.name):
+            default_storage.delete(photo.name)
 
-    #if a whole note is deleted, this is used so the photo associated with the note is not taking up space in our file system
+    #when a Note is deleted, delete the photo file too
+    def delete(self, *args, **kwargs):
+        if self.photo:
+            self.delete_photo(self.photo)
+
+        super().delete(*args, **kwargs)
 
 
-
-
-def __str__(self):
-        photo_str = self.photo.url if self.photo else 'no photo'
-        return f'Note for user {self.user} for show ID {self.show} with title {self.title} text {self.text} posted on {self.posted_date}\nPhoto {photo_str}'
-
-
+    def __str__(self):
+        return f'User: {self.user} Show: {self.show} Note title: {self.title} Text: {self.text} Posted on: {self.posted_date} Photo: {self.photo}'
 
