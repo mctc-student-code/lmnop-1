@@ -43,11 +43,15 @@ def notes_for_show(request, show_pk):
 
 
 def note_detail(request, note_pk):
+    #only show user's notes if logged in
     note = get_object_or_404(Note, pk=note_pk)
-    form = NewNoteForm(instance=note)  # Pre-populate with data from this NOte instance
-    return render(request, 'lmn/notes/note_detail.html', {'note': note, 'form': form} )
-
-
+    if request.user == note.user:
+        form = NewNoteForm(instance=note)  # Pre-populate with data from this NOte instance
+        return render(request, 'lmn/notes/note_detail.html', {'note': note, 'form': form} )
+    #is there an else?
+    #don't even show the form if it's not the correct user
+    return render(request, 'lmn/notes/note_detail.html', {'note': note} )
+    
 @login_required
 def edit_note(request, note_pk):
     note = get_object_or_404(Note, pk=note_pk)
