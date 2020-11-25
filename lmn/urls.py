@@ -2,7 +2,7 @@ from django.urls import path
 from django.contrib.auth import views as auth_views
 
 from . import views
-from .views import views_main, views_artists, views_venues, views_notes, views_users, views_admin
+from .views import views_main, views_artists, views_venues, views_notes, views_users, views_admin, views_goodbye
 
 
 # app_name = 'lmn'
@@ -10,6 +10,8 @@ from .views import views_main, views_artists, views_venues, views_notes, views_u
 urlpatterns = [
 
     path('', views_main.homepage, name='homepage'),
+    # page defaults to goodbye when user logs out.
+    path('goodbye', views_goodbye.goodbye, name='goodbye'),
 
     # Venue-related
     path('venues/list/', views_venues.venue_list, name='venue_list'),
