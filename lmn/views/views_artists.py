@@ -28,7 +28,8 @@ def artist_list(request):
         artists = Artist.objects.filter(name__icontains=search_name).order_by('name')
     else:
         artists = Artist.objects.all().order_by('name')
-    artists = helpers.pg_records(request, artists, 5)
+    page = request.GET.get('page')
+    artists = helpers.pg_records(page, artists, 5)
     return render(request, 'lmn/artists/artist_list.html', { 'artists': artists, 'form': form, 'search_term': search_name })
 
 
