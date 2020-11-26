@@ -126,7 +126,9 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+#TIME_ZONE = 'UTC'
+TIME_ZONE='America/Chicago'
+
 
 USE_I18N = True
 
@@ -153,3 +155,5 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # Where to send user after successful login, and logout, if no other page is provided.
 LOGIN_REDIRECT_URL = 'my_user_profile'
 LOGOUT_REDIRECT_URL = 'homepage'
+
+
