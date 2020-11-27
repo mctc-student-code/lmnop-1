@@ -1,17 +1,26 @@
 from django.test import TestCase
 from lmnop_project import helpers
-from ..models import Artist, Venue, Show
+from ..models import Artist, Venue, Show, Note, User
+from django.db import models
+from datetime import datetime
+
 
 
 # test will take a small sample of data using the pg_records function and assertequals
 class TestListWithPageData(TestCase):
 
     def setUp(self):
+        user = User(username='user', password='password')
+        user.save()
         for i in range(3):
             artist = Artist(name=f'Number{i+1}')
             artist.save()  # must save the new artist, then get id
             venue = Venue(name=f'venue{i+1}', city=f'city{i+1}', state=f'state{i+1}')
             venue.save()
+            show = Show(show_date=datetime.now(), artist=Artist(id=i+1), venue=Venue(i+1))
+            show.save()
+            note = Note(show=Show(f'{i+1}'), user=User(id=1), title=f'title{i+1}', text=f'text{i+1}', posted_date=datetime.now())
+            note.save()
 
     # check that names returned from db are correct on first loaded page
     def test_first_page_correct_entries_artist(self):
