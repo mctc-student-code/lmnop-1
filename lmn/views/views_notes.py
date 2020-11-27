@@ -29,9 +29,13 @@ def new_note(request, show_pk):
 
 def latest_notes(request):
     notes = Note.objects.all().order_by('-posted_date')
-    # Calls helper function to paginate records. (request, list of objects, how many entries per page)
+
+    # get page number to be supplied to pagination for page number display
     page = request.GET.get('page')
+    # Calls helper function to paginate records. (request, list of objects, how many entries per page)
+    #TODO change number of objects supplied to 20 before deployment
     notes = helpers.pg_records(page, notes, 5)
+
     return render(request, 'lmn/notes/note_list.html', { 'notes': notes })
 
 

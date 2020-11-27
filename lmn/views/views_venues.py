@@ -18,8 +18,13 @@ def venue_list(request):
         venues = Venue.objects.filter(name__icontains=search_name).order_by('name')
     else :
         venues = Venue.objects.all().order_by('name')
+
+    # get page number to be supplied to pagination for page number display
     page = request.GET.get('page')
+    # created new page object to be supplied to rendered page
+    #TODO change number of objects supplied to 20 before deployment
     venues = helpers.pg_records(page, venues, 5)
+
     return render(request, 'lmn/venues/venue_list.html', { 'venues': venues, 'form': form, 'search_term': search_name })
 
 

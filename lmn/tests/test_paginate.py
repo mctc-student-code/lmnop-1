@@ -51,6 +51,7 @@ class TestListWithPageData(TestCase):
         paged_list = helpers.pg_records(2, artists, 2)
         self.assertEqual(len(paged_list), 1)
 
+    # compares each note attribute for each note object on page one to expected positions in object list from db
     def test_first_page_correct_entries_note(self):
         notes = Note.objects.all().order_by('id')
         paged_list = helpers.pg_records(1, notes, 2)
@@ -67,6 +68,7 @@ class TestListWithPageData(TestCase):
         self.assertEqual(notes[0].posted_date, paged_list[0].posted_date)
         self.assertEqual(notes[1].posted_date, paged_list[1].posted_date)
 
+    # compares each note attribute for each note object on page two to expected positions in object list from db
     def test_second_page_correct_entries_note(self):
         notes = Note.objects.all().order_by('id')
         paged_list = helpers.pg_records(2, notes, 2)
@@ -77,16 +79,19 @@ class TestListWithPageData(TestCase):
         self.assertEqual(notes[2].user_id, paged_list[0].user_id)
         self.assertEqual(notes[2].posted_date, paged_list[0].posted_date)
 
+    # check that the desired number of items are displayed per page
     def test_correct_number_of_items_returned_page_one_note(self):
         notes = Note.objects.all().order_by('id')
         paged_list = helpers.pg_records(1, notes, 2)
         self.assertEqual(len(paged_list), 2)
 
+    # check that the desired number of items are displayed per page
     def test_correct_number_of_items_returned_page_two_note(self):
         notes = Note.objects.all().order_by('id')
         paged_list = helpers.pg_records(2, notes, 2)
         self.assertEqual(len(paged_list), 1)
 
+    # test to ensure that when no valid page number is supplied page number is set to 1
     def test_no_page_number_supplied(self):
         notes = Note.objects.all().order_by('id')
         paged_list_exists = helpers.pg_records(1, notes, 2)
@@ -113,6 +118,7 @@ class TestListWithPageData(TestCase):
         paged_list_out_of_bounds = helpers.pg_records(100000, artists, 2)
         self.assertEquals(str(paged_list_exists), str(paged_list_out_of_bounds))
 
+    # test that when negative numbers are supplied as the page number that page by default is set to 1
     def test_page_number_lower_than_exists(self):
         artists = Artist.objects.all().order_by('name')
         paged_list_exists = helpers.pg_records(1, artists, 2)
