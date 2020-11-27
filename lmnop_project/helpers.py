@@ -15,6 +15,10 @@ def pg_records(page, list, num):
         page_object = paginator.page(1)
     except EmptyPage:
         # if query value is higher than the number of pages, default to last page
-        page_object = paginator.page(paginator.num_pages)
+        # if query value is lower than 1, default to first page
+        if page < 1:
+            page_object = paginator.page(1)
+        else:
+            page_object = paginator.page(paginator.num_pages)
 
     return page_object
