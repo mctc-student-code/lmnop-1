@@ -7,6 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseForbidden
+from django.db.models.functions import Lower
 
 
 @login_required
@@ -31,15 +32,25 @@ def new_note(request, show_pk):
 
 
 def latest_notes(request):
-     
-    search_form =NoteSearchForm()
-    search_name = request.GET.get('search_name')
-    if search_name:
-        notes = Note.objects.filter(title__icontains=search_name).order_by('title')
+    search_form =NoteSearchForm(request.GET)
+    if search_form.is_valid():
+        search_term = search_form.cleaned_data['search_term']
+        notes = Note.objects.filter(title__icontains=search_term).order_by(Lower('title'))
     else:
-        notes= Note.objects.all().order_by('title')
+        search_form = NoteSearchForm()
+        notes = Note.objects.order_by(Lower('title'))
 
-    return render(request, 'lmn/notes/note_list.html', {'notes': notes, 'search_form': search_form,'search_term': search_name })
+    return render(request, 'lmn/notes/note_list.html', {'notes': notes, 'search_form': search_form})
+
+     
+    #search_form =NoteSearchForm()
+    #search_name = request.GET.get('search_name')
+  # if search_name:
+       # notes = Note.objects.filter(title__icontains=search_name).order_by('title')
+    #else:
+        #notes= Note.objects.all().order_by('title')
+
+   # return render(request, 'lmn/notes/note_list.html', {'notes': notes, 'search_form': search_form,'search_term': search_name })
 
 def notes_for_show(request, show_pk): 
     # Notes for show, most recent first
