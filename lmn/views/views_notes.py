@@ -1,17 +1,12 @@
-from django.db.models.deletion import RESTRICT
-from django.db.models.fields.files import ImageField
+
 from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib import messages
 
 from ..models import Venue, Artist, Note, Show
 from ..forms import VenueSearchForm, NewNoteForm, ArtistSearchForm, UserRegistrationForm
 
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import User
-from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseForbidden
-from django.core.exceptions import ValidationError
-from django.db import IntegrityError
+
 
 
 @login_required
