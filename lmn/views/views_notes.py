@@ -72,17 +72,17 @@ def edit_note(request, note_pk):
            
             return redirect('note_detail', note_pk=note.pk)
 
-<<<<<<< HEAD
-
-#def save_photo(request, note_pk):
-    
-    
-
-    
-
-=======
-    
->>>>>>> 663ca82ddca71a2fb4ceeb55cae7669f3b9de8af
+# <<<<<<< HEAD
+#
+# #def save_photo(request, note_pk):
+#
+#
+#
+#
+#
+# =======
+#
+# >>>>>>> 663ca82ddca71a2fb4ceeb55cae7669f3b9de8af
 @login_required #can only delete own notes
 def delete_note(request, note_pk):
     note = get_object_or_404(Note, pk=note_pk)
