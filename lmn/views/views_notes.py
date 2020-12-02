@@ -1,9 +1,12 @@
 
+
 from django.shortcuts import render, redirect, get_object_or_404
 from ..models import Venue, Artist, Note, Show
 from ..forms import VenueSearchForm, NewNoteForm, ArtistSearchForm, UserRegistrationForm
+
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseForbidden
+from lmnop_project import helpers
 
 
 @login_required
@@ -18,7 +21,7 @@ def new_note(request, show_pk):
             note.user = request.user
             note.show = show
             note.save()
-            
+
             return redirect('note_detail', note_pk=note.pk)
 
     else :
@@ -29,13 +32,20 @@ def new_note(request, show_pk):
 
 def latest_notes(request):
     notes = Note.objects.all().order_by('-posted_date')
+
+    # get page number to be supplied to pagination for page number display
+    page = request.GET.get('page')
+    # Calls helper function to paginate records. (request, list of objects, how many entries per page)
+    #TODO change number of objects supplied to 20 before deployment
+    notes = helpers.pg_records(page, notes, 5)
+
     return render(request, 'lmn/notes/note_list.html', { 'notes': notes })
 
 
-def notes_for_show(request, show_pk): 
+def notes_for_show(request, show_pk):
     # Notes for show, most recent first
     notes = Note.objects.filter(show=show_pk).order_by('-posted_date')
-    show = Show.objects.get(pk=show_pk)  
+    show = Show.objects.get(pk=show_pk)
     return render(request, 'lmn/notes/note_list.html', { 'show': show, 'notes': notes })
 
 
@@ -52,29 +62,19 @@ def edit_note(request, note_pk):
     show = get_object_or_404(Show, pk= note.show_id)
     if note.user != request.user:
         return HttpResponseForbidden()
-       
+
     if request.method == 'POST' :
         form = NewNoteForm(request.POST, request.FILES, instance=note)
-     
+
         if form.is_valid():
             note = form.save(commit=False)
             note.user = request.user
             note.show = show
             note.save()
-           
+
             return redirect('note_detail', note_pk=note.pk)
 
-# <<<<<<< HEAD
-#
-# #def save_photo(request, note_pk):
-#
-#
-#
-#
-#
-# =======
-#
-# >>>>>>> 663ca82ddca71a2fb4ceeb55cae7669f3b9de8af
+
 @login_required #can only delete own notes
 def delete_note(request, note_pk):
     note = get_object_or_404(Note, pk=note_pk)
