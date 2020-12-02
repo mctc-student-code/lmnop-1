@@ -18,14 +18,10 @@ def new_note(request, show_pk):
             note = form.save(commit=False)
             note.user = request.user
             note.show = show
-            note.photo = request.photo
             note.save()
 
-<<<<<<< HEAD
-            return redirect('note_detail', note_pk=note.pk)
-=======
+
             return redirect('my_user_profile')
->>>>>>> 77d5337f4edb4279c64a387de8bc01b0dc0e9af1
 
     else :
         form = NewNoteForm()
@@ -48,14 +44,9 @@ def latest_notes(request):
 def notes_for_show(request, show_pk):
     # Notes for show, most recent first
     notes = Note.objects.filter(show=show_pk).order_by('-posted_date')
-<<<<<<< HEAD
-    show = Show.objects.get(pk=show_pk)
-    return render(request, 'lmn/notes/note_list.html', { 'show': show, 'notes': notes })
-=======
 
     show = Show.objects.get(pk=show_pk)  
     return render(request, 'lmn/notes/notes_for_show.html', { 'show': show, 'notes': notes })
->>>>>>> 77d5337f4edb4279c64a387de8bc01b0dc0e9af1
 
 
 def note_detail(request, note_pk):
@@ -84,17 +75,11 @@ def edit_note(request, note_pk):
             note.user = request.user
             note.show = show
             note.save()
-<<<<<<< HEAD
 
-            return redirect('note_detail', note_pk=note.pk)
-
-
-=======
            
             return redirect('my_user_profile')
 
           
->>>>>>> 77d5337f4edb4279c64a387de8bc01b0dc0e9af1
 @login_required #can only delete own notes
 def delete_note(request, note_pk):
     note = get_object_or_404(Note, pk=note_pk)
