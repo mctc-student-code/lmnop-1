@@ -1,6 +1,7 @@
 {% extends 'lmn/base.html' %}
 {% block content %}
 
+
 <h2>Artist List</h2>
 
 <P>Artist Search</p>
@@ -36,5 +37,21 @@
 <p>No artists found</p>
 
 {% endfor %}
+
+<div class="pagination">
+    <div class="section-inner clearfix">
+        <p>
+            {% if artists.has_previous %}
+                <a href="?page={{ artists.previous_page_number }}">&lt; Prev</a> |
+            {% endif %}
+
+            {% if artists.has_next %}
+                <a href="?page={{ artists.next_page_number }}">Next &gt;</a>
+            {% endif %}
+
+            <span>Page {{ artists.number }} of {{ artists.paginator.num_pages }}</span>
+        </p>
+    </div>
+</div>
 
 {% endblock %}
