@@ -14,3 +14,7 @@ env
 lmnop_credentials.json
 app.yaml
 
+
+media
+cloud_sql_proxy
+

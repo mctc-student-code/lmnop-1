@@ -1,6 +1,9 @@
+
+
 from django.shortcuts import render, redirect, get_object_or_404
-from ..models import Note, Show
-from ..forms import NewNoteForm
+from ..models import Venue, Artist, Note, Show
+from ..forms import VenueSearchForm, NewNoteForm, ArtistSearchForm, UserRegistrationForm
+
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseForbidden
 from lmnop_project import helpers
@@ -11,8 +14,8 @@ def new_note(request, show_pk):
 
     show = get_object_or_404(Show, pk=show_pk)
 
-    if request.method == 'POST' :
-        form = NewNoteForm(request.POST)
+    if request.method == 'POST':
+        form = NewNoteForm(request.POST, request.FILES)
         if form.is_valid():
             note = form.save(commit=False)
             note.user = request.user
