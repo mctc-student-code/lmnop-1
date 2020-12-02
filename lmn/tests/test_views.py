@@ -598,12 +598,12 @@ class TestImageUpload(TestCase):
 
                 note_1 = Note.objects.get(pk=1)
                 img_file_name = os.path.basename(img_file_path)
-                expected_uploaded_file_path = os.path.join(self.MEDIA_ROOT, 'lmnop_project/media/user_images', img_file_name)
+                expected_uploaded_file_path = os.path.join(self.MEDIA_ROOT, 'user_images', img_file_name)
 
                 # TEST BELOW NEED ALSO GET DONE
-                #self.assertTrue(os.path.exists(expected_uploaded_file_path))
+                self.assertTrue(os.path.exists(expected_uploaded_file_path))
                 self.assertIsNotNone(note_1.photo)
-                #self.assertTrue(filecmp.cmp( img_file_path,  expected_uploaded_file_path ))
+                self.assertTrue(filecmp.cmp( img_file_path,  expected_uploaded_file_path ))
 
                 #THIS TEST NEED TO GET DONE
 
@@ -637,7 +637,7 @@ class TestImageUpload(TestCase):
             img_file = self.create_temp_image_file()
             with open(img_file, 'rb') as image:
                 resp = self.client.post(reverse('note_detail', kwargs={'note_pk': 1} ), {'photo': image }, follow=True)
-                #self.assertEqual(resp.status_code, 403)
+                self.assertEqual(resp.status_code, 403)
 
                 # THIS IS ANOTHER TEST THAT NEES TO GET DONE
 
