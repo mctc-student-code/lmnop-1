@@ -20,6 +20,7 @@ def new_note(request, show_pk):
             note.show = show
             note.save()
 
+
             return redirect('my_user_profile')
 
     else :
@@ -74,6 +75,7 @@ def edit_note(request, note_pk):
             note.user = request.user
             note.show = show
             note.save()
+
            
             return redirect('my_user_profile')
 
