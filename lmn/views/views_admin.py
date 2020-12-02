@@ -13,6 +13,7 @@ url = 'https://app.ticketmaster.com/discovery/v2/events'
 classificationName = 'music'
 city = 'Minneapolis'
 
+''' Methods for extracting data from Ticketmaster and adding to the database'''
 
 def get_music_data(request):
     data = get_ticketMaster()
@@ -20,6 +21,7 @@ def get_music_data(request):
     return HttpResponse('ok')
 
 def get_ticketMaster():
+    ''' the api call to Ticketmaster'''
     try:
         query= {'classificationName': classificationName, 'city' : city, 'apikey': key}
         response = requests.get(url, params=query)
@@ -30,7 +32,7 @@ def get_ticketMaster():
         
     
 def extract_music_details(data):
-    # extract relevant data from the response 
+    ''' extract relevant data from the response '''
     events = data['_embedded']['events']
     
     for event in events: 
@@ -40,6 +42,7 @@ def extract_music_details(data):
         venue_state = event['_embedded']['venues'][0]['state']['stateCode']
         show_date_time = event['dates']['start']['dateTime']   
         
+        '''saving data to the database avoiding duplicates'''
         ##linking info to models and saving it 
         try:
             artist =  Artist.objects.get(name=performer)
