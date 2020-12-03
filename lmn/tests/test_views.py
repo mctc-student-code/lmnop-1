@@ -529,7 +529,7 @@ class TestSearchNotes(TestCase):
         self.assertNotContains(response, 'super')
         self.assertContains(response, 'awesome')
         self.assertContains(response, 'ok')
-        # Check the length of venues list is 2
+        # Check the length of notes list is 2
         self.assertEqual(len(response.context['notes']), 2)
         self.assertTemplateUsed(response, 'lmn/notes/note_list.html')
 
