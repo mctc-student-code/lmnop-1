@@ -67,3 +67,7 @@ a {
 .search:hover {
   background-color: rgb(72, 237,12)
 }
+
+.delete:hover {
+  background-color: red;
+}
