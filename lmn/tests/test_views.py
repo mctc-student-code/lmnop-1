@@ -9,6 +9,7 @@ from django.contrib.auth.models import User
 
 import re, datetime
 from datetime import timezone
+#from views import views_notes
 
 # TODO verify correct templates are rendered.
 
@@ -497,6 +498,40 @@ class TestNotes(TestCase):
         response = self.client.get(reverse('new_note', kwargs={'show_pk':1}))
         self.assertTemplateUsed(response, 'lmn/notes/new_note.html')
   
+
+class TestSearchNotes(TestCase):
+    fixtures = ['testing_artists', 'testing_venues', 'testing_shows','testing_notes', 'testing_users']
+   
+    def test_note_search_matches(self):
+        
+        response = self.client.get(reverse('latest_notes'), {'search_term' :'super'} )
+        self.assertEqual(len(response.context['notes']), 1)
+        notes = list(response.context['notes'].all())
+        note1 = notes[0]
+        self.assertEqual(note1.text, 'woo hoo!')
+
+
+    def test_note_search_not_matches(self):
+        response = self.client.get(reverse('latest_notes'), {'search_term' :'best'} )
+        self.assertEqual(len(response.context['notes']), 0)
+       
+
+    def test_note_search_caseinsensitive_matches(self):
+        response = self.client.get(reverse('latest_notes'), {'search_term' :'SUPER'} )
+        self.assertEqual(len(response.context['notes']), 1)
+        notes = list(response.context['notes'].all())
+        note1 = notes[0]
+        self.assertEqual(note1.text, 'woo hoo!')
+    
+    def test_note_search_partial_match_search_results(self):
+        response = self.client.get(reverse('latest_notes'), {'search_term' : 'o'})
+        # Should be two responses, Yes and REM
+        self.assertNotContains(response, 'super')
+        self.assertContains(response, 'awesome')
+        self.assertContains(response, 'ok')
+        # Check the length of venues list is 2
+        self.assertEqual(len(response.context['notes']), 2)
+        self.assertTemplateUsed(response, 'lmn/notes/note_list.html')
 
 
 class TestUserAuthentication(TestCase):
