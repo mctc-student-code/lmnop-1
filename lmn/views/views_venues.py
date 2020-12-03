@@ -30,7 +30,7 @@ def venue_list(request):
 
 
 def artists_at_venue(request, venue_pk):   # pk = venue_pk
-    ''' Get all of the artists who have played a show at the venue with pk provided '''
+    """ Get all of the artists who have played a show at the venue with pk provided """
 
     shows = Show.objects.filter(venue=venue_pk).order_by('-show_date') 
     venue = Venue.objects.get(pk=venue_pk)
@@ -39,6 +39,6 @@ def artists_at_venue(request, venue_pk):   # pk = venue_pk
 
 
 def venue_detail(request, venue_pk):
-    '''show details about the venue - name and location'''
+    """Show details about the venue - name and location"""
     venue = get_object_or_404(Venue, pk=venue_pk)
     return render(request, 'lmn/venues/venue_detail.html' , { 'venue': venue })

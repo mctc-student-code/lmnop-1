@@ -9,7 +9,7 @@ from lmnop_project import helpers
 
 @login_required
 def new_note(request, show_pk):
-''' Add a new note including photo for a show'''
+""" Add a new note including photo for a show"""
     show = get_object_or_404(Show, pk=show_pk)
 
     if request.method == 'POST':
@@ -29,7 +29,7 @@ def new_note(request, show_pk):
 
 
 def latest_notes(request):
-    ''' show most recent notes '''
+    """Show most recent notes """
     notes = Note.objects.all().order_by('-posted_date')
 
     # get page number to be supplied to pagination for page number display
@@ -42,6 +42,7 @@ def latest_notes(request):
 
 
 def notes_for_show(request, show_pk):
+    """Display notes for a particular show. """
     # Notes for show, most recent first
     notes = Note.objects.filter(show=show_pk).order_by('-posted_date')
 
@@ -50,7 +51,7 @@ def notes_for_show(request, show_pk):
 
 
 def note_detail(request, note_pk):
-    ''' show details (title, text, photo) about one particular note, by note_pk'''
+    """ Show details (title, text, photo) about one particular note, by note_pk"""
     #only show user's notes if logged in
     note = get_object_or_404(Note, pk=note_pk)
     if request.user == note.user:
@@ -62,7 +63,7 @@ def note_detail(request, note_pk):
     
 @login_required
 def edit_note(request, note_pk):
-    ''' to make changes to a note's title, text, photo'''
+    """Make changes to a note's title, text, photo"""
     note = get_object_or_404(Note, pk=note_pk)
     #need to get the show Id as saving the note requires that
     show = get_object_or_404(Show, pk= note.show_id)
@@ -83,7 +84,7 @@ def edit_note(request, note_pk):
           
 @login_required #can only delete own notes
 def delete_note(request, note_pk):
-    ''' deletes a note's title, text and  photo from the datbase'''
+    """Delete a note's title, text and  photo from the database"""
     note = get_object_or_404(Note, pk=note_pk)
     if note.user == request.user:
         note.delete()
