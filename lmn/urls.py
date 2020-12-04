@@ -24,6 +24,7 @@ urlpatterns = [
     path('notes/<int:note_pk>/delete', views_notes.delete_note, name='delete_note'),
 
     path('notes/<int:note_pk>/edit', views_notes.edit_note, name='edit_note'),
+   
 
     # Artist related
     path('artists/list/', views_artists.artist_list, name='artist_list'),
