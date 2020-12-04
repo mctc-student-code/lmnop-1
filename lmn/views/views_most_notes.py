@@ -14,9 +14,9 @@ from django.db.models import Count
 #  Will show the show with most notes
 def show_most_notes(request):
     # Query count noted and dysplay the three 
-    show = Show.objects.annotate(num_notes=Count('note')).order_by('-num_notes')[:3]
+    shows = Show.objects.annotate(num_notes=Count('note')).order_by('-num_notes')[:3]
     # Print shows 
-    print(show)
-    return render(request, 'lmn/notes/show_most_notes.html', {'show': show})
+    print(shows)
+    return render(request, 'lmn/notes/show_most_notes.html', {'shows': shows})
 
     
