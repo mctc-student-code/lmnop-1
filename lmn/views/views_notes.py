@@ -85,8 +85,3 @@ def delete_note(request, note_pk):
         return redirect('my_user_profile')
     else:
         return HttpResponseForbidden()
-
-
-def show_most_notes(request):
-    notes = Note.objects.all()
-    return render(request, 'lmn/notes/show_most_notes.html', {'notes': notes})
