@@ -57,15 +57,17 @@ def notes_for_show(request, show_pk):
     return render(request, 'lmn/notes/notes_for_show.html', { 'show': show, 'notes': notes })
 
 
+
 def note_detail(request, note_pk):
-    #only show user's notes if logged in
     note = get_object_or_404(Note, pk=note_pk)
-    if request.user == note.user:
-        form = NewNoteForm(instance=note)  # Pre-populate with data from this NOte instance
-        return render(request, 'lmn/notes/note_detail.html', {'note': note, 'form': form} )
-    
-    return render(request, 'lmn/notes/note_detail.html', {'note': note} )
-  
+    if note.user != request.user:
+        return HttpResponseForbidden()
+      
+    form = NewNoteForm(instance=note)  # Pre-populate with data from this NOte instance
+    return render(request, 'lmn/notes/note_detail.html', {'note': note, 'form': form} )
+
+
+
     
 @login_required
 def edit_note(request, note_pk):
