@@ -145,10 +145,10 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'www', 'static')
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-if not os.getenv('GAE_INSTANCE'):
-    STATIC_URL = '/static/'
-    MEDIA_URL = '/media/'
-else:
+STATIC_URL = '/static/'
+MEDIA_URL = '/media/'
+
+if os.getenv('GAE_INSTANCE'):
     GS_STATIC_FILE_BUCKET = 'lmnop-project5.appspot.com'
 
     STATIC_URL = f'https://storage.cloud.google.com/{GS_STATIC_FILE_BUCKET}/static/'
