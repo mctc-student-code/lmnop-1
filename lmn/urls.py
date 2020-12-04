@@ -2,7 +2,7 @@ from django.urls import path
 from django.contrib.auth import views as auth_views
 
 from . import views
-from .views import views_main, views_artists, views_venues, views_notes, views_users
+from .views import views_main, views_artists, views_venues, views_notes, views_users, views_admin
 
 
 # app_name = 'lmn'
@@ -24,6 +24,7 @@ urlpatterns = [
     path('notes/<int:note_pk>/delete', views_notes.delete_note, name='delete_note'),
 
     path('notes/<int:note_pk>/edit', views_notes.edit_note, name='edit_note'),
+   
 
     # Artist related
     path('artists/list/', views_artists.artist_list, name='artist_list'),
@@ -41,4 +42,7 @@ urlpatterns = [
     path('register/', views_users.register, name='register'),
     path('goodbye_logout', views_users.goodbye, name='goodbye_logout')
 
+
+    #for getting data to database
+    path('ticket_master', views_admin.get_music_data, name='admin_get_music_data'),
 ]
