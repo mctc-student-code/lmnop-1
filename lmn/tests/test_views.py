@@ -456,6 +456,12 @@ class TestUserProfile(TestCase):
         # for currently logged in user, in this case, bob
         response = self.client.get(reverse('user_profile', kwargs={'user_pk':3}))
         self.assertContains(response, 'You are logged in, <a href="/user/profile/2/">bob</a>.')
+
+    
+    def test_goodbye_logout(self):
+        response = self.client.get(reverse('goodbye_logout'))
+        self.assertContains(response, 'You have been successfully logged out.')
+
         
 
 class TestNotes(TestCase):
