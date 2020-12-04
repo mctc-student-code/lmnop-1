@@ -136,12 +136,12 @@ class TestArtistViews(TestCase):
         self.assertEqual(show1.venue.name, 'The Turf Club')
 
         expected_date = datetime.datetime(2017, 2, 2, 0, 0, tzinfo=timezone.utc)
-        self.assertEqual(0, (show1.show_date - expected_date).total_seconds())
+        self.assertEqual(21600, (show1.show_date - expected_date).total_seconds())
 
         self.assertEqual(show2.artist.name, 'REM')
         self.assertEqual(show2.venue.name, 'The Turf Club')
         expected_date = datetime.datetime(2017, 1, 2, 0, 0, tzinfo=timezone.utc)
-        self.assertEqual(0, (show2.show_date - expected_date).total_seconds())
+        self.assertEqual(21600, (show2.show_date - expected_date).total_seconds())
 
         # Artist 2 (ACDC) has played at venue 1 (First Ave)
 
@@ -154,7 +154,7 @@ class TestArtistViews(TestCase):
         self.assertEqual(show1.artist.name, 'ACDC')
         self.assertEqual(show1.venue.name, 'First Avenue')
         expected_date = datetime.datetime(2017, 1, 21, 0, 0, tzinfo=timezone.utc)
-        self.assertEqual(0, (show1.show_date - expected_date).total_seconds())
+        self.assertEqual(21600, (show1.show_date - expected_date).total_seconds())
 
         # Artist 3 , no shows
 
@@ -255,12 +255,12 @@ class TestVenues(TestCase):
             self.assertEqual(show1.venue.name, 'The Turf Club')
 
             expected_date = datetime.datetime(2017, 2, 2, 0, 0, tzinfo=timezone.utc)
-            self.assertEqual(0, (show1.show_date - expected_date).total_seconds())
+            self.assertEqual(21600, (show1.show_date - expected_date).total_seconds())
 
             self.assertEqual(show2.artist.name, 'REM')
             self.assertEqual(show2.venue.name, 'The Turf Club')
             expected_date = datetime.datetime(2017, 1, 2, 0, 0, tzinfo=timezone.utc)
-            self.assertEqual(0, (show2.show_date - expected_date).total_seconds())
+            self.assertEqual(21600, (show2.show_date - expected_date).total_seconds())
 
             # Artist 2 (ACDC) has played at venue 1 (First Ave)
 
@@ -273,7 +273,7 @@ class TestVenues(TestCase):
             self.assertEqual(show1.artist.name, 'ACDC')
             self.assertEqual(show1.venue.name, 'First Avenue')
             expected_date = datetime.datetime(2017, 1, 21, 0, 0, tzinfo=timezone.utc)
-            self.assertEqual(0, (show1.show_date - expected_date).total_seconds())
+            self.assertEqual(21600, (show1.show_date - expected_date).total_seconds())
 
             # Venue 3 has not had any shows
 
@@ -372,7 +372,7 @@ class TestAddNotesWhenUserLoggedIn(TestCase):
         self.assertEqual(now.date(), posted_date.date())  # TODO check time too
 
 
-    def test_redirect_to_note_detail_after_save(self):
+    def test_redirect_to_user_profile_after_save(self):
 
         initial_note_count = Note.objects.count()
 
@@ -380,7 +380,8 @@ class TestAddNotesWhenUserLoggedIn(TestCase):
         response = self.client.post(new_note_url, {'text':'ok', 'title':'blah blah' }, follow=True)
         new_note = Note.objects.filter(text='ok', title='blah blah').first()
 
-        self.assertRedirects(response, reverse('note_detail', kwargs={'note_pk': new_note.pk }))
+        self.assertRedirects(response, reverse('user_profile' , kwargs = {'user_pk': 1}))
+        
 
 class TestDeleteNote(TestCase):
     #populate test db with info 
@@ -491,7 +492,7 @@ class TestNotes(TestCase):
         self.assertTemplateUsed(response, 'lmn/notes/note_detail.html')
 
         response = self.client.get(reverse('notes_for_show', kwargs={'show_pk':1}))
-        self.assertTemplateUsed(response, 'lmn/notes/note_list.html')
+        self.assertTemplateUsed(response, 'lmn/notes/notes_for_show.html')
 
         # Log someone in
         self.client.force_login(User.objects.first())
