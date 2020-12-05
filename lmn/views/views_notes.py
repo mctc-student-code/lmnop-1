@@ -1,4 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
+
+from ..twitter import tweet_note
+
 from ..models import Venue, Artist, Note, Show
 from ..forms import VenueSearchForm, NewNoteForm, ArtistSearchForm, UserRegistrationForm, NoteSearchForm
 
@@ -12,7 +15,6 @@ from lmnop_project import helpers
 
 @login_required
 def new_note(request, show_pk):
-
     show = get_object_or_404(Show, pk=show_pk)
 
     if request.method == 'POST':
@@ -22,7 +24,8 @@ def new_note(request, show_pk):
             note.user = request.user
             note.show = show
             note.save()
-
+            if request.POST.get('post_type') == 'Tweet and Add Note':
+                tweet_note(request, note)
 
             return redirect('my_user_profile')
 

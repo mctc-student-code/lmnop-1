@@ -376,7 +376,6 @@ class TestAddNotesWhenUserLoggedIn(TestCase):
         #posted_date = new_note_query.first().posted_date
         #self.assertEqual(now.date(), posted_date.date())  # TODO check time too
 
-
     def test_redirect_to_user_profile_after_save(self):
 
         initial_note_count = Note.objects.count()
@@ -414,8 +413,6 @@ class TestDeleteNote(TestCase):
         #delete one note
         response = self.client.post(reverse('delete_note', args=(1,)), follow=True)
         self.assertEqual(Note.objects.count(), initial_note_count -1)
-
-
 
 
 class TestUserProfile(TestCase):
