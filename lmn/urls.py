@@ -38,7 +38,9 @@ urlpatterns = [
     # Account related
     path('accounts/login/', auth_views.LoginView.as_view(template_name='registration/login.html'), name='login'),
     path('accounts/logout/', auth_views.LogoutView.as_view(template_name='registration/logout.html'), name='logout'),
+    #path('accounts/logout/', views_users.goodbye, name='logout'),
     path('register/', views_users.register, name='register'),
+    path('goodbye_logout', views_users.goodbye, name='goodbye_logout')
 
 
     #for getting data to database
