@@ -1,3 +1,5 @@
+from lmn.views.views_venues import artists_at_venue
+import unittest
 from django.test import TestCase, Client
 
 from django.urls import reverse
@@ -9,6 +11,7 @@ from django.contrib.auth.models import User
 
 import re, datetime
 from datetime import timezone
+from django.db.models import Count
 
 # TODO verify correct templates are rendered.
 
@@ -562,4 +565,20 @@ class TestNoteDetail(TestCase):
         self.assertEqual('yay!' , note_2.text)
 
 
-    
+class TestTopShows(TestCase):
+    fixtures = [ 'testing_users', 'testing_artists', 'testing_venues', 'testing_shows', 'testing_notes' ]
+
+    def test_show_with_most_notes(self):
+        most_notes = Show.objects.count()
+        response = self.client.post('txt/show_most_notes', {'artist': 2, 'venue': 1})
+        self.assertEqual( Show.objects.count(), most_notes)
+
+
+
+
+    def test_show_with_least_notes(self):
+        pass
+
+    def test_show_empty(self):
+        pass
+        
