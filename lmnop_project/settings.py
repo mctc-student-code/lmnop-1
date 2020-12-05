@@ -159,8 +159,8 @@ if os.getenv('GAE_INSTANCE'):
     from google.oauth2 import service_account
     GS_CREDENTIALS = service_account.Credentials.from_service_account_file('lmnop_credentials.json')
 
+
 # Where to send user after successful login, and logout, if no other page is provided.
 LOGIN_REDIRECT_URL = 'my_user_profile'
-LOGOUT_REDIRECT_URL = 'homepage'
-
+LOGOUT_REDIRECT_URL = 'goodbye_logout'
 
