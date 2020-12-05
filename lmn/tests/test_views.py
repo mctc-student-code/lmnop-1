@@ -561,7 +561,7 @@ class TestNoteDetail(TestCase):
         #make sure note 2 not changed
         self.assertEqual('yay!' , note_2.text)
 
-class TestUserProfile(TestCase):
+class TestProfileUser(TestCase):
     fixtures = ['testing_users', 'testing_users_profile']
 
     def test_user_not_logged_in(self):
