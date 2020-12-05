@@ -46,6 +46,8 @@ def latest_notes(request):
     # Calls helper function to paginate records. (request, list of objects, how many entries per page)
     #TODO change number of objects supplied to 20 before deployment
     notes = helpers.pg_records(page, notes, 5)
+
+
     return render(request, 'lmn/notes/note_list.html', {'notes': notes, 'search_form': search_form})
 
     

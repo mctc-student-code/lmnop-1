@@ -8,13 +8,14 @@
   <form action="{% url 'latest_notes' %}">
     {{ search_form }}
     <input type='submit' value='Search'>
-  
+
   </form>
 
   <a href="{% url 'latest_notes' %}">
     <button>Clear Search</button>
 </a>    
-
+<p>{{ counter }}</p>
+<p>{{ counter_two }}</p>
 {% if search_term %}
   <h2 id='note-list-title'>Title matching '{{ search_term }}' 
     <a href="{% url 'latest_notes' %}" id='clear_search'>(clear)</a>
