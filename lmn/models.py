@@ -1,8 +1,6 @@
-from django.db import models
 
 from django.db import models
 from django.contrib.auth.models import User
-import datetime
 from django.core.files.storage import default_storage
 
 # Every model gets a primary key field by default.
@@ -44,15 +42,11 @@ class Show(models.Model):
     show_date = models.DateTimeField(blank=False)  
     artist = models.ForeignKey(Artist, on_delete=models.CASCADE)
     venue = models.ForeignKey(Venue, on_delete=models.CASCADE)
-# <<<<<<< HEAD
-    
 
-# =======
     class Meta:
         #to avoid adding a duplicate show, these 3 elements considered together must be unique
         #if a show with the same 3 elements is found, it will not be added to the database
         unique_together = [['show_date', 'artist', 'venue']]
-# >>>>>>> 663ca82ddca71a2fb4ceeb55cae7669f3b9de8af
     def __str__(self):
         return f'Artist: {self.artist} at: {self.venue} on: {self.show_date}'
 
@@ -64,7 +58,6 @@ class Note(models.Model):
     title = models.CharField(max_length=200, blank=False)
     text = models.TextField(max_length=1000, blank=False)
     posted_date = models.DateTimeField(auto_now_add=True, blank=False)
-# <<<<<<< HEAD
     photo = models.ImageField(upload_to='user_images/', blank=True, null=True)
 
     
@@ -88,9 +81,6 @@ class Note(models.Model):
 
         super().delete(*args, **kwargs)
 
-# =======
-#
-# >>>>>>> 663ca82ddca71a2fb4ceeb55cae7669f3b9de8af
 
     def __str__(self):
         return f'User: {self.user} Show: {self.show} Note title: {self.title} Text: {self.text} Posted on: {self.posted_date} Photo: {self.photo}'
