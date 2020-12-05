@@ -17,7 +17,7 @@ from tweepy.error import TweepError
     # They did not end up being that hard to explain
 
 class TestAuthAndNote(TestCase):
-    fixtures = [ 'testing_users', 'testing_artists', 'testing_venues', 'testing_shows', 'testing_notes' ]
+    fixtures = [ 'testing_users', 'testing_artists', 'testing_venues', 'testing_shows', 'testing_tweets' ]
 
     def setUp(self):
         user = User.objects.first()
@@ -61,7 +61,7 @@ class TestAuthAndNote(TestCase):
 # Here's where stuff gets weird. 
 
 class TestTweetFailure(TestCase):
-    fixtures = [ 'testing_users', 'testing_artists', 'testing_venues', 'testing_shows', 'testing_notes' ]       
+    fixtures = [ 'testing_users', 'testing_artists', 'testing_venues', 'testing_shows', 'testing_tweets' ]       
 
     def setUp(self):
         user = User.objects.first()
@@ -92,7 +92,7 @@ class TestTweetFailure(TestCase):
 # MagicMock wouldn't reset between functions? so new testcase!
 
 class TestTweetSuccess(TestCase):
-    fixtures = [ 'testing_users', 'testing_artists', 'testing_venues', 'testing_shows', 'testing_notes' ]       
+    fixtures = [ 'testing_users', 'testing_artists', 'testing_venues', 'testing_shows', 'testing_tweets' ]       
 
     def setUp(self):
         user = User.objects.first()

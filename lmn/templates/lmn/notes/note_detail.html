@@ -1,14 +1,6 @@
 {% extends 'lmn/base.html' %}
-{% load static %}
 {% block content %}
 
-{% if messages %}
-  <div class="messages">
-    {% for message in messages %}
-        <p class="{{message.tags}}">{{ message }}</p>
-    {% endfor %}
-  </div>
-{% endif %}
 
 <h2 id="note-page-title">{{ note.show.artist.name }} at {{ note.show.venue.name }} by 
     <a href="{% url 'user_profile' user_pk=note.user.pk %}">{{ note.user}}</a>
@@ -21,8 +13,6 @@
 {% endif %}
 
 
-
- 
 {% if user.username == note.user.username %}
 <form method="POST" action="{% url 'edit_note' note.pk %}">
   <div>
@@ -40,6 +30,5 @@
 </form>
 {% endif %}
 
-<script src="{% static 'js/confirm_delete.js' %}"></script>
 
 {% endblock %}
