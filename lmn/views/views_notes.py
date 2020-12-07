@@ -42,7 +42,6 @@ def latest_notes(request):
         search_term = search_form.cleaned_data['search_term']
         notes = Note.objects.filter(title__icontains=search_term).order_by('-posted_date')
 
-
     else:
         search_form = NoteSearchForm()
         notes = Note.objects.order_by('-posted_date')
