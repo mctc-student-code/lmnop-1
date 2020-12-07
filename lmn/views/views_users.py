@@ -18,7 +18,6 @@ def user_profile(request, user_pk):
 
 @login_required
 def my_user_profile(request):
-    # TODO - editable version for logged-in user to edit their own profile
     
     if request.method == 'POST':
         profile = Profile.objects.get(user=request.user)
