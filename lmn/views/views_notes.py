@@ -67,7 +67,7 @@ def note_detail(request, note_pk):
     if note.user != request.user:
         return HttpResponseForbidden()
       
-    form = NewNoteForm(instance=note)  # Pre-populate with data from this NOte instance
+    form = NewNoteForm(instance=note)  # Pre-populate with data from this Note instance
     return render(request, 'lmn/notes/note_detail.html', {'note': note, 'form': form} )
 
 

@@ -491,6 +491,7 @@ class TestNotes(TestCase):
         response = self.client.get(reverse('latest_notes'))
         self.assertTemplateUsed(response, 'lmn/notes/note_list.html')
 
+        self.client.force_login(User.objects.first()) 
         response = self.client.get(reverse('note_detail', kwargs={'note_pk':1}))
         self.assertTemplateUsed(response, 'lmn/notes/note_detail.html')
 
