@@ -385,7 +385,6 @@ class TestAddNotesWhenUserLoggedIn(TestCase):
         new_note = Note.objects.filter(text='ok', title='blah blah').first()
 
         self.assertRedirects(response, reverse('my_user_profile'))#} , kwargs = {'user_pk': 1}))
-        #self.assertRedirects(response, reverse('my_user_profile' , kwargs = {'user_pk': 1}))
         
 
 class TestDeleteNote(TestCase):
@@ -511,11 +510,10 @@ class TestSearchNotes(TestCase):
         
         response = self.client.get(reverse('latest_notes'), {'search_term' :'super'} )
         self.assertEqual(len(response.context['notes']), 1)
-        notes = list(response.context['notes'].all())
-        #note1 = response.context['notes']
-        note1 = notes[0]
-        
-        self.assertEqual(note1.text, 'woo hoo!')
+        page1 = response.context['notes']
+        #retrieve the text of the first element that appears on page 1 of the search return
+        note1Text = page1[0].text
+        self.assertEqual(note1Text, 'woo hoo!' )
 
 
     def test_note_search_not_matches(self):
@@ -526,9 +524,11 @@ class TestSearchNotes(TestCase):
     def test_note_search_caseinsensitive_matches(self):
         response = self.client.get(reverse('latest_notes'), {'search_term' :'SUPER'} )
         self.assertEqual(len(response.context['notes']), 1)
-        notes = list(response.context['notes'].all())
-        note1 = notes[0]
-        self.assertEqual(note1.text, 'woo hoo!')
+        page1 = response.context['notes']
+        #retrieve the text of the first element that appears on page 1 of the search return
+        note1Text = page1[0].text
+        self.assertEqual(note1Text, 'woo hoo!' )
+        
     
     def test_note_search_partial_match_search_results(self):
         response = self.client.get(reverse('latest_notes'), {'search_term' : 'o'})
