@@ -512,7 +512,9 @@ class TestSearchNotes(TestCase):
         response = self.client.get(reverse('latest_notes'), {'search_term' :'super'} )
         self.assertEqual(len(response.context['notes']), 1)
         notes = list(response.context['notes'].all())
+        #note1 = response.context['notes']
         note1 = notes[0]
+        
         self.assertEqual(note1.text, 'woo hoo!')
 
 
