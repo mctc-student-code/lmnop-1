@@ -6,7 +6,7 @@ from django.contrib.auth import authenticate
 
 from lmn.models import Venue, Artist, Note, Show
 from django.contrib.auth.models import User
-
+from lmnop_project import helpers
 import re, datetime
 from datetime import timezone
 import os
@@ -385,6 +385,7 @@ class TestAddNotesWhenUserLoggedIn(TestCase):
         new_note = Note.objects.filter(text='ok', title='blah blah').first()
 
         self.assertRedirects(response, reverse('user_profile' , kwargs = {'user_pk': 1}))
+        #self.assertRedirects(response, reverse('my_user_profile' , kwargs = {'user_pk': 1}))
         
 
 class TestDeleteNote(TestCase):
@@ -474,6 +475,7 @@ class TestNotes(TestCase):
         self.assertEqual(first.pk, 3)
         self.assertEqual(second.pk, 2)
         self.assertEqual(third.pk, 1)
+
 
 
     def test_notes_for_show_view(self):
