@@ -43,4 +43,7 @@ urlpatterns = [
 
     #for getting data to database
     path('ticket_master', views_admin.get_music_data, name='admin_get_music_data'),
+
+    path('random', views_admin.add_random_artist, name='add_random_artist')
 ]
+

@@ -2,6 +2,7 @@ import os
 import requests
 import re
 from ..models import Artist, Venue, Show
+from ..add_data import random_artist
 from django.http import HttpResponse
 from django.http import Http404
 from django.db import IntegrityError
@@ -12,6 +13,11 @@ key = os.environ.get('TICKETMASTER_KEY')
 url = 'https://app.ticketmaster.com/discovery/v2/events'
 classificationName = 'music'
 city = 'Minneapolis'
+
+
+def add_random_artist(request):
+    random_artist.add_random_artist(6, 10)
+    return HttpResponse(200)
 
 
 def get_music_data(request):
