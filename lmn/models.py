@@ -44,10 +44,10 @@ class Show(models.Model):
     show_date = models.DateTimeField(blank=False)  
     artist = models.ForeignKey(Artist, on_delete=models.CASCADE)
     venue = models.ForeignKey(Venue, on_delete=models.CASCADE)
-# <<<<<<< HEAD
+
     
 
-# =======
+
     class Meta:
         #to avoid adding a duplicate show, these 3 elements considered together must be unique
         #if a show with the same 3 elements is found, it will not be added to the database

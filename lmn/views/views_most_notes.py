@@ -1,21 +1,14 @@
-
-
 from django.shortcuts import render
 from ..models import Show
-
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseForbidden
-from django.db.models import Count
 
 from django.db.models import Count
+from ..models import  Show
 
-
-@login_required
-#  Will show the show with most notes
 def show_most_notes(request):
-    # Query count noted and dysplay the three 
-    shows = Show.objects.annotate(num_notes=Count('note')).order_by('-num_notes')[:5]
-    # Print shows 
+# Query collects 5 shows with most notes and displays the 5 most reviewed
+# If show does not have a note it won't be displayed because will be excluded out of the list .
+    shows = Show.objects.annotate(num_notes=Count('note')).exclude(num_notes=0).order_by('-num_notes')[:5]
     print(shows)
     return render(request, 'lmn/notes/show_most_notes.html', {'shows': shows})
 
