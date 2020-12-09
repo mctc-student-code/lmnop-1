@@ -1,16 +1,20 @@
+
+"""
+Generate random artists for the database.
+
+"""
+
 import random
 from ..models import Artist 
 
+
 def add_random_artist(min_length, max_length):
-    """
-    Adds an artist with a random name to the database.
+    """Adds an artist with a random name to the database.
 
-    Parameters:
+    :param min_length: the minimum length, in letters, of the randomly generated artist's name 
+    :param max_length: the maximum length, in letters,  of the randomly generated artist's name 
 
-    min_length (int): the minimum length, in letters, of the randomly generated artist's name 
-    max_length (int): the maximum length, in letters,  of the randomly generated artist's name 
-
-
+    :raises ValueError: if max_length is less than min_length
     """
 
     if max_length < min_length:
