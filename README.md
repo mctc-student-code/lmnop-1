@@ -1,6 +1,12 @@
 # LMNOP
 
+Cat, with markdown
+
 ![Cat](/screenshots/cat.jpg)
+
+Cat, with HTML
+
+<img alt="Cat" src="/screenshots/cat.jpg" height="300">
 
 ## Live Music Notes, Opinions, Photographs
 
