@@ -1,6 +1,6 @@
 # LMNOP
 
-![Cat!](screenshots/cat.jpg)
+![Cat!](screenshots/cat.jpg`)
 
 ## Live Music Notes, Opinions, Photographs
 
